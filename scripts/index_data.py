@@ -6,6 +6,7 @@ import time
 import pandas as pd
 from pinecone import Pinecone, ServerlessSpec
 from langchain_text_splitters import RecursiveCharacterTextSplitter
+import tiktoken
 # Add parent dir to path so we can import config
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from config import (
@@ -48,9 +49,11 @@ def build_embed_text(row) -> str:
 
 
 def chunk_articles(df: pd.DataFrame):
+    enc = tiktoken.get_encoding("cl100k_base")
     splitter = RecursiveCharacterTextSplitter(
         chunk_size=CHUNK_SIZE,
         chunk_overlap=CHUNK_OVERLAP,
+        length_function=lambda text: len(enc.encode(text)),
     )
 
     records = []
