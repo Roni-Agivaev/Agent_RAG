@@ -134,6 +134,6 @@ def prompt(req: PromptRequest):
 def stats():
     return {
         "chunk_size":    CHUNK_SIZE,
-        "overlap_ratio": round(CHUNK_OVERLAP / CHUNK_SIZE, 1),
+        "overlap_ratio": round(CHUNK_OVERLAP / CHUNK_SIZE, 2),
         "top_k":         TOP_K,
     }
