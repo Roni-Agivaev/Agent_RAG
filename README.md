@@ -56,7 +56,7 @@ Returns the current RAG hyperparameters.
 {
   "chunk_size": 512,
   "overlap_ratio": 0.2,
-  "top_k": 7
+  "top_k": 8
 }
 ```
 
