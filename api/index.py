@@ -92,8 +92,18 @@ def prompt(req: PromptRequest):
         context_parts = []
         for match in deduped:
             m = match.metadata
+            # Strip the prepended "Title:/Authors:/Tags:" header from the chunk
+            # (added by build_embed_text during indexing) to avoid duplication
+            chunk_text = m["chunk"]
+            if chunk_text.startswith("Title:"):
+                lines = chunk_text.splitlines()
+                # Skip header lines until the first blank line
+                for i, line in enumerate(lines):
+                    if line.strip() == "":
+                        chunk_text = "\n".join(lines[i + 1:]).strip()
+                        break
             context_parts.append(
-                f"[Article: {m['title']}]\nAuthors: {m['authors']}\nTags: {m['tags']}\n{m['chunk']}"
+                f"[Article: {m['title']}]\nAuthors: {m['authors']}\nTags: {m['tags']}\n{chunk_text}"
             )
         context_str = "\n\n".join(context_parts)
         user_prompt  = f"{context_str}\n\nQuestion: {req.question}"
