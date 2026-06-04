@@ -88,6 +88,10 @@ def ensure_index(pc: Pinecone):
         # wait for index to be ready
         while not pc.describe_index(PINECONE_INDEX_NAME).status["ready"]:
             time.sleep(1)
+    else:
+        # Clear all existing vectors so old chunks don't mix with new ones
+        print("  Clearing existing vectors from index...")
+        pc.Index(PINECONE_INDEX_NAME).delete(delete_all=True)
     return pc.Index(PINECONE_INDEX_NAME)
 
 

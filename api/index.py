@@ -60,12 +60,6 @@ SYSTEM_PROMPT = (
 class PromptRequest(BaseModel):
     question: str = Field(example="Your natural language question here")
 
-
-@app.get("/api/prompt")
-def prompt_info():
-    return {"message": "Send a POST request with { \"question\": \"your question\" } to use this endpoint."}
-
-
 @app.post("/api/prompt")
 def prompt(req: PromptRequest):
     # 0. validate input
