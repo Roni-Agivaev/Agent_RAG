@@ -1,0 +1,17 @@
+.env
+env.py
+medium-english-50mb.csv
+.claude/
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+.idea/
+*.egg-info/
+dist/
+build/
+.vercel/
+node_modules/
+
+.vercel
