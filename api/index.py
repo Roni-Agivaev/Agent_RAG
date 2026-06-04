@@ -20,7 +20,7 @@ PINECONE_INDEX    = "medium-rag"
 
 CHUNK_SIZE    = 512
 CHUNK_OVERLAP = 100
-TOP_K         = 7
+TOP_K         = 8
 
 # ── helpers ───────────────────────────────────────────────────────────────────
 def get_embeddings() -> OpenAIEmbeddings:
