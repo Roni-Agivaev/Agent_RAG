@@ -55,7 +55,7 @@ Returns the current RAG hyperparameters.
 ```json
 {
   "chunk_size": 512,
-  "overlap_ratio": 0.2,
+  "overlap_ratio": 0.195,
   "top_k": 8
 }
 ```
@@ -65,7 +65,7 @@ Returns the current RAG hyperparameters.
 | Parameter | Value | Notes |
 |---|---|---|
 | `chunk_size` | 512 tokens | Token-based via `cl100k_base` encoding |
-| `overlap_ratio` | 0.2 (20%) | 100 token overlap between chunks |
+| `overlap_ratio` | 0.195 (19.5%) | 100 token overlap between chunks |
 | `top_k` | 7 | Pinecone retrieves top 7 chunks, then deduplicated to distinct articles |
 
 ## Key Design Decisions
