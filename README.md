@@ -68,6 +68,16 @@ Returns the current RAG hyperparameters.
 | `overlap_ratio` | 0.195 (19.5%) | 100 token overlap between chunks |
 | `top_k` | 7 | Pinecone retrieves top 7 chunks, then deduplicated to distinct articles |
 
+## Chunking Experiments
+
+Three configurations were tested against the four assignment question types (precise fact retrieval, multi-result listing, key idea summary, recommendation with justification). The test query used throughout was: *"Find an article that argues past pandemics (such as the bubonic plague) can spur innovation and recovery, and summarise its central argument."*
+
+| Config | chunk_size | overlap | Index size | Observation |
+|---|---|---|---|---|
+| **A — char-based (initial)** | 512 chars (~128 tokens) | 100 chars | ~142,000 chunks | Chunks were too small — a single article produced 15–20 chunks, flooding the top-k results with fragments from the same article. The LLM received shallow context and produced vague, one-paragraph answers with no direct quotes. |
+| **B — token-based, small overlap** | 512 tokens | 50 tokens (9.8%) | ~28,000 chunks | Better retrieval diversity. However, sentences near chunk boundaries were sometimes cut mid-idea, causing the LLM to miss key arguments that spanned the boundary. |
+| **C — token-based, moderate overlap ✅ chosen** | 512 tokens | 100 tokens (19.5%) | ~28,000 chunks | Best results across all four question types. The 100-token overlap ensures ideas that straddle chunk boundaries are captured in at least one chunk. The LLM produced detailed answers with direct quotes (e.g. *"Only the fittest survive. You have a Darwinian moment for trends."*) grounded in the retrieved passages. |
+
 ## Key Design Decisions
 
 - **Token-based chunking** — uses `tiktoken` (`cl100k_base`) so chunk sizes are measured in real tokens, matching the embedding model's context window
